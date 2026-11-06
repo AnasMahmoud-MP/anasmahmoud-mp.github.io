@@ -113,3 +113,149 @@ if (lightbox && lightboxImage && lightboxCaption && lightboxClose && lightboxZoo
     if (event.key === 'Escape' && lightbox.classList.contains('is-open')) closeLightbox();
   });
 }
+
+const portfolioGuide = document.querySelector('.portfolio-guide');
+
+if (portfolioGuide) {
+  const avatar = portfolioGuide.querySelector('.guide-avatar');
+  const avatarLabel = portfolioGuide.querySelector('.guide-avatar-label');
+  const bubble = portfolioGuide.querySelector('.guide-bubble');
+  const kicker = portfolioGuide.querySelector('#guide-kicker');
+  const title = portfolioGuide.querySelector('#guide-title');
+  const message = portfolioGuide.querySelector('#guide-message');
+  const progress = portfolioGuide.querySelector('.guide-progress');
+  const progressBar = progress?.querySelector('i');
+  const stepCount = portfolioGuide.querySelector('#guide-step-count');
+  const inviteActions = portfolioGuide.querySelector('.guide-invite-actions');
+  const tourActions = portfolioGuide.querySelector('.guide-tour-actions');
+  const startButton = portfolioGuide.querySelector('[data-guide-start]');
+  const skipButton = portfolioGuide.querySelector('[data-guide-skip]');
+  const backButton = portfolioGuide.querySelector('[data-guide-back]');
+  const nextButton = portfolioGuide.querySelector('[data-guide-next]');
+  const exitButton = portfolioGuide.querySelector('[data-guide-exit]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stops = [
+    { target: '#hero', kicker: '01 / Meet Anas', title: 'Paid media, shown through outcomes.', message: 'Start here: Anas builds and optimizes campaigns across Meta, Snapchat and TikTok—then makes the numbers easy to understand.' },
+    { target: '#results', kicker: '02 / Results', title: 'The headline proof.', message: 'This snapshot brings the biggest outcomes forward: conversions, purchases, registrations and campaign return.' },
+    { target: '#services', kicker: '03 / Services', title: 'What Anas can run.', message: 'From campaign setup and creative testing to optimization and reporting, these are the core paid-media capabilities.' },
+    { target: '#work', kicker: '04 / Featured case', title: 'Abaq: problem to growth.', message: 'The featured case study shows the challenge, what changed, the result and the real campaign screenshots behind it.' },
+    { target: '#clients', kicker: '05 / Client work', title: 'More brands. More outcomes.', message: 'These client stories show how the same performance mindset was applied across e-commerce, education and healthcare.' },
+    { target: '#evidence', kicker: '06 / Campaign evidence', title: 'Open the proof.', message: 'Every campaign screenshot is clickable. Open any one to inspect the data at a larger size.' },
+    { target: '#process', kicker: '07 / Process', title: 'A clear working rhythm.', message: 'Review, plan, run and report: four practical steps that keep decisions grounded in performance data.' },
+    { target: '#work-with-me', kicker: '08 / Ways to work', title: 'Choose the right engagement.', message: 'You can bring Anas in for an audit, campaign management, a focused strategy sprint or ongoing support.' },
+    { target: '#about', kicker: '09 / About', title: 'The operator behind the work.', message: 'A quick look at Anas’s working style: direct communication, active testing and attention to business outcomes.' },
+    { target: '#faq', kicker: '10 / FAQ', title: 'Practical details, answered.', message: 'Platforms, markets, budgets, reporting and project setup are covered here before the first conversation.' },
+    { target: '#contact', kicker: '11 / Contact', title: 'Tour complete. Let’s talk.', message: 'Call, WhatsApp, email or Instagram are all one tap away. Pick whichever contact method feels easiest.' }
+  ];
+  let currentIndex = 0;
+  let isActive = false;
+  let movementTimer = null;
+
+  const readSession = (key) => {
+    try { return window.sessionStorage.getItem(key); } catch (error) { return null; }
+  };
+
+  const writeSession = (key, value) => {
+    try { window.sessionStorage.setItem(key, value); } catch (error) { /* Storage can be unavailable in private contexts. */ }
+  };
+
+  const setBubbleOpen = (isOpen) => {
+    if (!avatar || !bubble) return;
+    bubble.hidden = !isOpen;
+    avatar.setAttribute('aria-expanded', String(isOpen));
+  };
+
+  const clearHighlight = () => {
+    document.querySelector('.tour-highlight')?.classList.remove('tour-highlight');
+  };
+
+  const showInvitation = () => {
+    if (!kicker || !title || !message || !inviteActions || !tourActions || !progress) return;
+    kicker.textContent = 'Pixel portfolio tour';
+    title.textContent = 'Want the quick guided run?';
+    message.textContent = 'I can walk you through every section and point out the strongest campaign proof. You stay in control.';
+    inviteActions.hidden = false;
+    tourActions.hidden = true;
+    progress.hidden = true;
+    avatarLabel.textContent = 'Tour';
+    setBubbleOpen(true);
+  };
+
+  const updateStop = () => {
+    const stop = stops[currentIndex];
+    const target = document.querySelector(stop.target);
+    if (!target || !kicker || !title || !message || !stepCount || !progressBar || !backButton || !nextButton) return;
+
+    clearHighlight();
+    target.classList.add('tour-highlight');
+    kicker.textContent = stop.kicker;
+    title.textContent = stop.title;
+    message.textContent = stop.message;
+    stepCount.textContent = `${currentIndex + 1} / ${stops.length}`;
+    progressBar.style.width = `${((currentIndex + 1) / stops.length) * 100}%`;
+    backButton.disabled = currentIndex === 0;
+    nextButton.textContent = currentIndex === stops.length - 1 ? 'Finish' : 'Next';
+    avatarLabel.textContent = `${currentIndex + 1}/${stops.length}`;
+    setBubbleOpen(true);
+
+    portfolioGuide.classList.add('is-moving');
+    target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    window.clearTimeout(movementTimer);
+    movementTimer = window.setTimeout(() => portfolioGuide.classList.remove('is-moving'), reduceMotion ? 0 : 650);
+  };
+
+  const closeTour = () => {
+    isActive = false;
+    clearHighlight();
+    document.body.classList.remove('guide-tour-active');
+    avatarLabel.textContent = 'Tour';
+    setBubbleOpen(false);
+    writeSession('anas-portfolio-tour-seen', 'true');
+  };
+
+  const startTour = () => {
+    if (!inviteActions || !tourActions || !progress) return;
+    isActive = true;
+    currentIndex = 0;
+    document.body.classList.add('guide-tour-active');
+    inviteActions.hidden = true;
+    tourActions.hidden = false;
+    progress.hidden = false;
+    updateStop();
+  };
+
+  avatar?.addEventListener('click', () => {
+    if (isActive) {
+      setBubbleOpen(Boolean(bubble?.hidden));
+    } else {
+      showInvitation();
+    }
+  });
+
+  startButton?.addEventListener('click', startTour);
+  skipButton?.addEventListener('click', closeTour);
+  backButton?.addEventListener('click', () => {
+    if (currentIndex === 0) return;
+    currentIndex -= 1;
+    updateStop();
+  });
+  nextButton?.addEventListener('click', () => {
+    if (currentIndex === stops.length - 1) {
+      closeTour();
+      return;
+    }
+    currentIndex += 1;
+    updateStop();
+  });
+  exitButton?.addEventListener('click', closeTour);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isActive) closeTour();
+  });
+
+  window.requestAnimationFrame(() => {
+    portfolioGuide.classList.add('is-ready');
+    if (readSession('anas-portfolio-tour-seen')) setBubbleOpen(false);
+    else showInvitation();
+  });
+}

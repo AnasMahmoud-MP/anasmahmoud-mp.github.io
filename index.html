@@ -8,10 +8,10 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Anas Mahmoud — Performance Marketing Portfolio" />
   <meta property="og:description" content="Paid media case studies and campaign results across Meta, Google, Snapchat and TikTok." />
-  <meta property="og:url" content="https://anas-mahmoud-paid-media-portfolio.on-dm-001.chatgpt.site" />
-  <meta property="og:image" content="https://anas-mahmoud-paid-media-portfolio.on-dm-001.chatgpt.site/assets/anas-portrait.jpeg" />
+  <meta property="og:url" content="https://anasmahmoud-mp.github.io/" />
+  <meta property="og:image" content="https://anasmahmoud-mp.github.io/assets/anas-portrait.jpeg" />
   <meta name="twitter:card" content="summary" />
-  <link rel="canonical" href="https://anas-mahmoud-paid-media-portfolio.on-dm-001.chatgpt.site" />
+  <link rel="canonical" href="https://anasmahmoud-mp.github.io/" />
   <link rel="icon" href="/assets/anas-portrait.jpeg" />
   <title>Anas Mahmoud — Performance Marketing Portfolio</title>
   <link rel="stylesheet" href="/styles.css" />
@@ -34,7 +34,7 @@
     </header>
 
     <main>
-      <section class="hero section-pad" aria-labelledby="hero-title">
+      <section class="hero section-pad" id="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow reveal">PERFORMANCE MARKETER &amp; MEDIA BUYER</p>
           <h1 id="hero-title" class="display display-hero reveal">Media buying with <em>clear results.</em></h1>
@@ -58,7 +58,7 @@
         </div>
       </section>
 
-      <section class="results band-red section-pad" aria-labelledby="results-title">
+      <section class="results band-red section-pad" id="results" aria-labelledby="results-title">
         <div class="section-kicker"><span>01</span><span>Selected results</span><span>Across 2025—2026</span></div>
         <div class="results-heading-row">
           <h2 id="results-title" class="display display-section">Selected <em>campaign results.</em></h2>
@@ -259,6 +259,46 @@
     <footer class="footer"><div class="wordmark footer-mark">anas.</div><p>Performance marketing / 2026</p><a href="#top">Back to top</a></footer>
   </div>
   <a class="mobile-whatsapp" href="https://wa.me/201020622274" target="_blank" rel="noopener" aria-label="Message Anas on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3 20.5l1.4-4.7A8.5 8.5 0 1 1 20.5 11.6Z" /><path d="M8.4 7.7c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.8 1.9c.1.3.1.5-.1.7l-.7.8c-.2.2-.1.4 0 .6.6 1 1.4 1.8 2.5 2.4.2.1.4.2.6 0l.9-1.1c.2-.2.4-.3.7-.2l2 .9c.3.1.4.3.4.5 0 .3-.1 1.6-.8 2.2-.7.6-1.6.7-2.2.6-.6-.1-3.5-1.2-5.8-3.3-1.8-1.7-3-3.7-3.1-4.5-.1-.8.2-1.2.5-1.5Z" /></svg><span>WhatsApp</span></a>
+  <aside class="portfolio-guide" aria-label="Interactive portfolio tour">
+    <button class="guide-avatar" type="button" aria-expanded="true" aria-controls="guide-bubble" aria-label="Open the portfolio tour">
+      <span class="pixel-guide" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="img">
+          <rect class="pixel-shadow" x="8" y="42" width="32" height="4" />
+          <rect class="pixel-hair" x="14" y="4" width="20" height="4" />
+          <rect class="pixel-hair" x="10" y="8" width="28" height="8" />
+          <rect class="pixel-skin" x="10" y="16" width="28" height="12" />
+          <rect class="pixel-hair" x="10" y="12" width="6" height="8" />
+          <rect class="pixel-hair" x="32" y="12" width="6" height="8" />
+          <rect class="pixel-eye" x="16" y="19" width="4" height="4" />
+          <rect class="pixel-eye" x="28" y="19" width="4" height="4" />
+          <rect class="pixel-mouth" x="22" y="24" width="6" height="2" />
+          <rect class="pixel-shirt" x="12" y="28" width="24" height="12" />
+          <rect class="pixel-skin" x="6" y="30" width="6" height="8" />
+          <rect class="pixel-skin" x="36" y="30" width="6" height="8" />
+          <rect class="pixel-paper" x="31" y="29" width="9" height="8" />
+          <rect class="pixel-mark" x="33" y="31" width="5" height="2" />
+          <rect class="pixel-leg pixel-leg-left" x="14" y="40" width="8" height="6" />
+          <rect class="pixel-leg pixel-leg-right" x="26" y="40" width="8" height="6" />
+        </svg>
+      </span>
+      <span class="guide-avatar-label">Tour</span>
+    </button>
+    <div class="guide-bubble" id="guide-bubble" role="dialog" aria-labelledby="guide-title" aria-describedby="guide-message">
+      <p class="guide-kicker" id="guide-kicker">Pixel portfolio tour</p>
+      <h2 id="guide-title">Want the quick guided run?</h2>
+      <p id="guide-message" aria-live="polite">I can walk you through every section and point out the strongest campaign proof. You stay in control.</p>
+      <div class="guide-progress" hidden><span aria-hidden="true"><i></i></span><b id="guide-step-count">1 / 11</b></div>
+      <div class="guide-actions guide-invite-actions">
+        <button class="guide-primary" type="button" data-guide-start>Start tour</button>
+        <button class="guide-secondary" type="button" data-guide-skip>Explore myself</button>
+      </div>
+      <div class="guide-actions guide-tour-actions" hidden>
+        <button class="guide-secondary" type="button" data-guide-back>Back</button>
+        <button class="guide-primary" type="button" data-guide-next>Next</button>
+        <button class="guide-exit" type="button" data-guide-exit>Exit tour</button>
+      </div>
+    </div>
+  </aside>
   <div class="image-lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="lightbox-caption">
     <button class="lightbox-zoom" type="button" aria-label="Zoom image">Zoom image <span aria-hidden="true">+</span></button>
     <button class="lightbox-close" type="button" aria-label="Close image viewer">Close <span aria-hidden="true">×</span></button>
